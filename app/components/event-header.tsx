@@ -38,10 +38,9 @@ export default function EventHeader() {
           height={21}
           className={`${partnerLogoClass} w-8`}
         />
-        <div className="flex h-8 shrink-0 items-center px-1 font-mono te
-        xt-lg font-black italic leading-none text-findit-900/75">
- Find<span className="text-findit-700">IT</span>
-    </div>
+        <div className="flex h-8 shrink-0 items-center px-1 font-mono text-lg font-black italic leading-none text-findit-900/75">
+          Find<span className="text-findit-700">IT</span>
+        </div>
         <Image
           src="/findit/ai-connect-logo.png"
           alt="AI Connect"

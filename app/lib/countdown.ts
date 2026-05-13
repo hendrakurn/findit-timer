@@ -7,12 +7,50 @@ export interface RemainingTime {
 
 export type CountdownStatus = 'idle' | 'running' | 'paused' | 'complete';
 
+export const SESSION_IDS = ['main-stage', 'pitch'] as const;
+export type SessionId = (typeof SESSION_IDS)[number];
+
+export const DEFAULT_SESSION_ID: SessionId = 'main-stage';
+export const DEFAULT_LABEL = 'Registration Closes In';
+export const DEFAULT_DURATION_SECONDS = 24 * 60 * 60;
+
+export interface CountdownSessionState {
+  roomId: SessionId;
+  eventLabel: string;
+  durationSeconds: number;
+  endAt: number | null;
+  remainingMs: number | null;
+  status: CountdownStatus;
+  updatedAt: number;
+}
+
 export interface PersistedState {
   eventLabel: string;
   durationSeconds: number;
   endAt: number | null;
   remainingMs: number | null;
   status: CountdownStatus;
+}
+
+export function isSessionId(value: string): value is SessionId {
+  return SESSION_IDS.includes(value as SessionId);
+}
+
+export function getSessionDisplayName(sessionId: SessionId): string {
+  if (sessionId === 'main-stage') return 'Main Stage';
+  return 'Pitch';
+}
+
+export function createDefaultSessionState(sessionId: SessionId): CountdownSessionState {
+  return {
+    roomId: sessionId,
+    eventLabel: DEFAULT_LABEL,
+    durationSeconds: DEFAULT_DURATION_SECONDS,
+    endAt: null,
+    remainingMs: null,
+    status: 'idle',
+    updatedAt: 0,
+  };
 }
 
 export function clampDurationInput(

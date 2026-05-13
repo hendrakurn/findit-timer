@@ -2,6 +2,19 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Create a local env file for the remote PINs:
+
+```bash
+cp .env.example .env.local
+```
+
+The app supports two countdown sessions:
+
+- Display: `/` or `/display/main-stage`, remote: `/remote/main-stage`
+- Display: `/display/pitch`, remote: `/remote/pitch`
+
+Remote access is protected by the static PINs in `FINDIT_MAIN_STAGE_PIN` and `FINDIT_PITCH_PIN`.
+
 First, run the development server:
 
 ```bash

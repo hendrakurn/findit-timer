@@ -1,13 +1,14 @@
 import EventHeader from './components/event-header';
 import DecorativeScene from './components/decorative-scene';
-import CountdownOnly from './components/countdown-only';
+import SessionCountdownDisplay from './components/session-countdown-display';
+import { DEFAULT_SESSION_ID } from './lib/countdown';
 
 export default function Page() {
   return (
     <div className="relative min-h-[100dvh] flex flex-col">
       <DecorativeScene />
       <EventHeader />
-      <CountdownOnly />
+      <SessionCountdownDisplay sessionId={DEFAULT_SESSION_ID} />
     </div>
   );
 }

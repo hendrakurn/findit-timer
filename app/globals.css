@@ -144,6 +144,11 @@ body {
   transform: translateY(1px) scale(0.98);
 }
 
+.btn-primary:disabled {
+  transform: none;
+  box-shadow: none;
+}
+
 .btn-secondary {
   background: rgba(26, 51, 120, 0.5);
   border: 1px solid rgba(116, 146, 230, 0.3);
@@ -158,6 +163,11 @@ body {
 
 .btn-secondary:active {
   transform: translateY(1px) scale(0.98);
+}
+
+.btn-secondary:disabled {
+  transform: none;
+  box-shadow: none;
 }
 
 .input-field {

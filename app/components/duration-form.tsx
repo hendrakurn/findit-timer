@@ -20,6 +20,7 @@ interface ValidationErrors {
 interface Props {
   defaults: DurationValues;
   status: 'idle' | 'running' | 'paused' | 'complete';
+  busy?: boolean;
   onStart: (values: DurationValues) => void;
   onPause: () => void;
   onResume: () => void;
@@ -58,6 +59,7 @@ function validate(
 export default function DurationForm({
   defaults,
   status,
+  busy = false,
   onStart,
   onPause,
   onResume,
@@ -74,6 +76,7 @@ export default function DurationForm({
   const secondsRef = useRef<HTMLInputElement>(null);
 
   const isActive = status === 'running' || status === 'paused';
+  const isDisabled = busy || isActive;
 
   function applyPreset(preset: (typeof PRESETS)[0]) {
     setHoursRaw(String(preset.hours));
@@ -119,7 +122,7 @@ export default function DurationForm({
           onChange={(e) => setLabel(e.target.value)}
           placeholder="Registration Closes In"
           maxLength={60}
-          disabled={isActive}
+          disabled={isDisabled}
           className="input-field focus-ring rounded-[10px] px-4 py-2.5 text-sm w-full disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ fontFamily: 'var(--font-geist-mono)' }}
         />
@@ -158,7 +161,7 @@ export default function DurationForm({
                 const v = parseIntField(e.target.value);
                 setHoursRaw(String(Math.min(999, Math.max(0, v))));
               }}
-              disabled={isActive}
+              disabled={isDisabled}
               aria-invalid={!!errors.hours}
               aria-describedby={errors.hours ? 'err-hours' : undefined}
               className="input-field focus-ring rounded-[10px] px-3 py-2.5 text-center font-mono text-sm w-full disabled:opacity-50 disabled:cursor-not-allowed"
@@ -193,7 +196,7 @@ export default function DurationForm({
                 const v = parseIntField(e.target.value);
                 setMinutesRaw(String(Math.min(59, Math.max(0, v))));
               }}
-              disabled={isActive}
+              disabled={isDisabled}
               aria-invalid={!!errors.minutes}
               aria-describedby={errors.minutes ? 'err-minutes' : undefined}
               className="input-field focus-ring rounded-[10px] px-3 py-2.5 text-center font-mono text-sm w-full disabled:opacity-50 disabled:cursor-not-allowed"
@@ -228,7 +231,7 @@ export default function DurationForm({
                 const v = parseIntField(e.target.value);
                 setSecondsRaw(String(Math.min(59, Math.max(0, v))));
               }}
-              disabled={isActive}
+              disabled={isDisabled}
               aria-invalid={!!errors.seconds}
               aria-describedby={errors.seconds ? 'err-seconds' : undefined}
               className="input-field focus-ring rounded-[10px] px-3 py-2.5 text-center font-mono text-sm w-full disabled:opacity-50 disabled:cursor-not-allowed"
@@ -262,6 +265,7 @@ export default function DurationForm({
               key={p.label}
               type="button"
               onClick={() => applyPreset(p)}
+              disabled={busy}
               className="focus-ring btn-secondary rounded-[8px] px-3 py-1.5 font-mono text-xs"
               style={{ color: 'oklch(0.7 0.15 245)', minHeight: '32px' }}
             >
@@ -276,6 +280,7 @@ export default function DurationForm({
         {status === 'idle' || status === 'complete' ? (
           <button
             type="submit"
+            disabled={busy}
             className="focus-ring btn-primary rounded-[10px] px-8 py-3 font-mono text-sm font-semibold text-white tracking-wider flex-1 sm:flex-none"
             style={{ minHeight: '44px', minWidth: '120px' }}
           >
@@ -287,6 +292,7 @@ export default function DurationForm({
           <button
             type="button"
             onClick={onPause}
+            disabled={busy}
             className="focus-ring btn-secondary rounded-[10px] px-8 py-3 font-mono text-sm font-semibold tracking-wider flex-1 sm:flex-none"
             style={{ color: '#f5c842', minHeight: '44px', minWidth: '120px' }}
           >
@@ -298,6 +304,7 @@ export default function DurationForm({
           <button
             type="button"
             onClick={onResume}
+            disabled={busy}
             className="focus-ring btn-primary rounded-[10px] px-8 py-3 font-mono text-sm font-semibold text-white tracking-wider flex-1 sm:flex-none"
             style={{ minHeight: '44px', minWidth: '120px' }}
           >
@@ -309,6 +316,7 @@ export default function DurationForm({
           <button
             type="button"
             onClick={onReset}
+            disabled={busy}
             className="focus-ring btn-secondary rounded-[10px] px-6 py-3 font-mono text-sm tracking-wider"
             style={{ color: 'oklch(0.6 0.12 245)', minHeight: '44px', minWidth: '90px' }}
           >
