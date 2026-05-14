@@ -63,7 +63,11 @@ Target flow:
 - API update timer hanya menerima request dari remote yang memiliki auth valid untuk session terkait.
 - Display page melakukan refresh state berkala dari backend.
 - Remote page menulis action ke backend lalu optimistically refresh state lokal.
-- Implementasi v1 memakai in-memory store server-side. Ini cukup untuk lintas-device pada satu server Next yang sama; deployment multi-instance membutuhkan store eksternal.
+- Local development memakai in-memory store server-side sebagai fallback.
+- Production implementation memakai persistent storage via Vercel KV/Upstash Redis REST jika env storage tersedia:
+  - `KV_REST_API_URL` + `KV_REST_API_TOKEN`
+  - atau `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
+- In-memory store hanya fallback untuk local development. Production tanpa persistent storage harus dianggap misconfigured karena countdown dapat kembali ke default 24 jam.
 
 ### UI and UX
 

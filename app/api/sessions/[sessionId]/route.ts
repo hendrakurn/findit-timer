@@ -28,7 +28,11 @@ export async function GET(_request: NextRequest, context: Context) {
   const sessionId = await resolveSession(context);
   if (!sessionId) return json({ error: 'Invalid session' }, { status: 404 });
 
-  return json({ state: getSessionState(sessionId) });
+  try {
+    return json({ state: await getSessionState(sessionId) });
+  } catch (error) {
+    return json({ error: error instanceof Error ? error.message : 'Countdown storage failed' }, { status: 500 });
+  }
 }
 
 export async function PUT(request: NextRequest, context: Context) {
@@ -61,12 +65,20 @@ export async function PUT(request: NextRequest, context: Context) {
     }
 
     const eventLabel = typeof payload.eventLabel === 'string' ? payload.eventLabel : DEFAULT_LABEL;
-    return json({ state: startSession(sessionId, { eventLabel, durationSeconds }) });
+    try {
+      return json({ state: await startSession(sessionId, { eventLabel, durationSeconds }) });
+    } catch (error) {
+      return json({ error: error instanceof Error ? error.message : 'Countdown storage failed' }, { status: 500 });
+    }
   }
 
-  if (payload.action === 'pause') return json({ state: pauseSession(sessionId) });
-  if (payload.action === 'resume') return json({ state: resumeSession(sessionId) });
-  if (payload.action === 'reset') return json({ state: resetSession(sessionId) });
+  try {
+    if (payload.action === 'pause') return json({ state: await pauseSession(sessionId) });
+    if (payload.action === 'resume') return json({ state: await resumeSession(sessionId) });
+    if (payload.action === 'reset') return json({ state: await resetSession(sessionId) });
+  } catch (error) {
+    return json({ error: error instanceof Error ? error.message : 'Countdown storage failed' }, { status: 500 });
+  }
 
   return json({ error: 'Unsupported action' }, { status: 400 });
 }

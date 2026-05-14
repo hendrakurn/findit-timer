@@ -15,6 +15,22 @@ The app supports two countdown sessions:
 
 Remote access is protected by the static PINs in `FINDIT_MAIN_STAGE_PIN` and `FINDIT_PITCH_PIN`.
 
+For production on Vercel, configure persistent countdown storage. The app reads either Vercel KV-style env names:
+
+```bash
+KV_REST_API_URL=
+KV_REST_API_TOKEN=
+```
+
+Or Upstash Redis env names:
+
+```bash
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+```
+
+Without persistent storage, production serverless instances cannot keep countdown state reliably.
+
 First, run the development server:
 
 ```bash
