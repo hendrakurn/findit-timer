@@ -29,6 +29,13 @@ UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
 ```
 
+If Vercel prefixes the storage env with the integration name, this project also accepts:
+
+```bash
+findit_KV_REST_API_URL=
+findit_KV_REST_API_TOKEN=
+```
+
 Without persistent storage, production serverless instances cannot keep countdown state reliably.
 
 First, run the development server:
