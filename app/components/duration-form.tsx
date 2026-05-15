@@ -28,10 +28,9 @@ interface Props {
 }
 
 const PRESETS = [
+  { label: '5m', hours: 0, minutes: 5, seconds: 0 },
+  { label: '10m', hours: 0, minutes: 10, seconds: 0 },
   { label: '15m', hours: 0, minutes: 15, seconds: 0 },
-  { label: '1h', hours: 1, minutes: 0, seconds: 0 },
-  { label: '6h', hours: 6, minutes: 0, seconds: 0 },
-  { label: '24h', hours: 24, minutes: 0, seconds: 0 },
 ];
 
 function parseIntField(raw: string): number {
@@ -120,7 +119,7 @@ export default function DurationForm({
           type="text"
           value={label}
           onChange={(e) => setLabel(e.target.value)}
-          placeholder="Registration Closes In"
+          placeholder="Timer"
           maxLength={60}
           disabled={isDisabled}
           className="input-field focus-ring rounded-[10px] px-4 py-2.5 text-sm w-full disabled:opacity-50 disabled:cursor-not-allowed"

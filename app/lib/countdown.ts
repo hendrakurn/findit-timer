@@ -11,7 +11,7 @@ export const SESSION_IDS = ['main-stage', 'pitch'] as const;
 export type SessionId = (typeof SESSION_IDS)[number];
 
 export const DEFAULT_SESSION_ID: SessionId = 'main-stage';
-export const DEFAULT_LABEL = 'Registration Closes In';
+export const DEFAULT_LABEL = 'Timer';
 export const DEFAULT_DURATION_SECONDS = 24 * 60 * 60;
 
 export interface CountdownSessionState {
